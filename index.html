@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>CursedMC</title>
+<style>
+	body{
+		background-color: #000;
+		color: #fff;
+	}
+	.floatyboi {
+		margin: 0 auto;
+		display: flex;
+		justify-content: center;
+		height: 100%;
+		align-items: center;
+		flex-direction: column;
+	}
+	button {
+		background-color: #d8d8d8;
+		border-radius: 47px;
+		border-style: none;
+		padding: 18px;
+		width: 100px;
+	}
+</style>
+<script>
+function printImg(url) {
+  var win = window.open('');
+  win.document.write('<img src="' + url + '" onload="window.print();window.close()" />');
+  win.focus();
+}
+
+function forceDownload(url, fileName){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.responseType = "blob";
+    xhr.onload = function(){
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(this.response);
+        var tag = document.createElement('a');
+        tag.href = imageUrl;
+        tag.download = fileName;
+        document.body.appendChild(tag);
+        tag.click();
+        document.body.removeChild(tag);
+    }
+    xhr.send();
+}
+</script>
+</head>
+<body>
+<div class="floatyboi">
+	<div style="width:100%; display:flex; justify-content:center">
+		<img width="33%" src="https://i.imgur.com/5Gph4qY.jpg"></img>
+	</div>
+	<div>
+		<button onclick="forceDownload('https://i.imgur.com/5Gph4qY.jpg', 'cursed.png')">Download</button>
+		<button onclick="printImg('https://i.imgur.com/5Gph4qY.jpg')">Print</button>
+	</div>
+</div>
+</body>
+</html>

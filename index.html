@@ -27,11 +27,23 @@
 	}
 	button:focus {outline:0;}
 </style>
-<script>
-function printImg(url) {
-  var win = window.open('');
-  win.document.write('<img src="' + url + '" onload="window.print();window.close()" />');
-  win.focus();
+<script>	
+function printPdf(url) {
+	var iframe = document.createElement('iframe');
+	// iframe.id = 'pdfIframe'
+	iframe.className='pdfIframe'
+	document.body.appendChild(iframe);
+	iframe.style.display = 'none';
+	iframe.onload = function () {
+		setTimeout(function () {
+			iframe.focus();
+			iframe.contentWindow.print();
+			URL.revokeObjectURL(url)
+			// document.body.removeChild(iframe)
+		}, 1);
+	};
+	iframe.src = url;
+	// URL.revokeObjectURL(url)
 }
 
 function forceDownload(url, fileName){
@@ -59,11 +71,11 @@ function forceDownload(url, fileName){
 	</div>
 	<div>
 		<button onclick="forceDownload('Cursed Minecraft Box Cover.pdf', 'box.pdf');">Download Box</button>
-		<button onclick="printImg('Cursed Minecraft Box Cover.pdf');">Print Box</button>
+		<button onclick="printPdf('Cursed Minecraft Box Cover.pdf');">Print Box</button>
 	</div>
 	<div>
 		<button onclick="forceDownload('Cursed Minecraft CD Label + Gamestop Sticker.pdf', 'disc.pdf');">Download Disc</button>
-		<button onclick="printImg('Cursed Minecraft CD Label + Gamestop Sticker.pdf');">Print Disc</button>
+		<button onclick="printPdf('Cursed Minecraft CD Label + Gamestop Sticker.pdf');">Print Disc</button>
 	</div>
 </div>
 </body>
